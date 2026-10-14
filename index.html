@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#0E1A2B">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>حسابي الذكي - نسخة تجريبية</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#EDF1F4;--card:#FFFFFF;--text:#0E1A2B;--muted:#66758A;--accent:#1E8F6F;--on:#FFFFFF;--line:#DDE4EB;--red:#B93A4A;--green:#1E8F6F;--gold:#C8A04A;--btn:#16345A;--btn-on:#FFFFFF;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0A101C;--card:#121B2C;--text:#E8EDF5;--muted:#8E9BB0;--accent:#3FBF98;--on:#06241B;--line:#22304A;--red:#F08A96;--green:#4AD3A5;--btn:#3FBF98;--btn-on:#06241B}}
+:root[data-theme="dark"]{--bg:#0A101C;--card:#121B2C;--text:#E8EDF5;--muted:#8E9BB0;--accent:#3FBF98;--on:#06241B;--line:#22304A;--red:#F08A96;--green:#4AD3A5;--btn:#3FBF98;--btn-on:#06241B}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--text);font-family:"IBM Plex Sans Arabic","Segoe UI",Tahoma,"Noto Naskh Arabic",Arial,sans-serif;font-size:15px;display:flex;justify-content:center;-webkit-font-smoothing:antialiased}
+#app{width:100%;max-width:480px;height:100%;display:flex;flex-direction:column}
+#screen{flex:1;overflow-y:auto;padding:14px 14px 20px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:12px}
+.row{display:flex;gap:8px;align-items:center}
+.muted{color:var(--muted);font-size:.85rem}
+h2{font-weight:700}h3{margin:0 0 10px;font-size:.98rem;font-weight:600}
+input{flex:1;min-width:0;border:1px solid var(--line);background:var(--bg);color:var(--text);border-radius:14px;padding:13px 14px;font:inherit}
+input:focus{outline:2px solid var(--gold);outline-offset:1px}
+button{font:inherit;border:0;border-radius:12px;cursor:pointer}
+.hero{position:relative;overflow:hidden;border-radius:24px;padding:16px 18px 10px;margin-bottom:16px;color:#fff;background:linear-gradient(150deg,#0E1A2B 0%,#16345A 68%,#1F4B7A 100%);box-shadow:0 16px 34px rgba(14,26,43,.32)}
+.hero .gl{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.hero>*:not(.gl){position:relative}
+.hero .top{display:flex;justify-content:space-between;align-items:center}
+.hero .lbl{font-size:.82rem;opacity:.78}
+.hero .n{font-size:2.4rem;font-weight:600;font-variant-numeric:tabular-nums;line-height:1.25;margin:8px 0 6px}
+.hero .cu{font-size:.95rem;font-weight:500;color:#E3C77A;margin-inline-start:8px}
+.hero .pill{display:inline-block;font-size:.8rem;padding:3px 12px;border-radius:999px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.16)}
+.hdr{display:flex;justify-content:space-between;align-items:center;margin:2px 2px 14px}.hdr h2{margin:0;font-size:1.35rem}
+.gear2{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:var(--card);border:1px solid var(--line);color:var(--text)}
+.gear2 svg{width:19px;height:19px}
+.gear{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff}
+.gear svg{width:19px;height:19px}
+.spark{display:block;width:100%;height:44px;margin-top:8px}
+.mic{width:50px;height:50px;border-radius:50%;background:linear-gradient(145deg,#E3C77A,#C8A04A);color:#2A1E05;display:grid;place-items:center;flex:none}
+.mic svg{width:24px;height:24px}
+.mic.rec{background:var(--red);color:#fff;animation:p 1s infinite}
+@keyframes p{50%{transform:scale(1.1)}}
+.btn{background:var(--btn);color:var(--btn-on);padding:11px 18px;font-weight:600}
+.btn2{background:transparent;color:var(--text);padding:10px 16px;border:1px solid var(--line)}
+.item{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid var(--line)}
+.item:last-child{border:0}
+.ib{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;flex:none;border:1px solid var(--line);color:var(--muted)}
+.ib svg{width:19px;height:19px}
+.ib.in{color:var(--green)}.ib.out{color:var(--red)}.ib.debt{color:#A8801F}
+.out{color:var(--red);font-weight:600;font-variant-numeric:tabular-nums}.in{color:var(--green);font-weight:600;font-variant-numeric:tabular-nums}
+.chip{background:var(--card);border:1px solid var(--line);color:var(--text);padding:7px 13px;border-radius:999px;font-size:.85rem;margin:0 0 6px 6px}
+.chip.act{background:var(--btn);color:var(--btn-on);border-color:var(--btn)}
+.msg{padding:10px 13px;border-radius:16px;margin:8px 0;max-width:88%;white-space:pre-line;line-height:1.75}
+.me{background:var(--btn);color:var(--btn-on);margin-inline-start:auto;border-end-start-radius:4px}
+.ai{background:var(--card);border:1px solid var(--line);border-end-end-radius:4px}
+.prev{border:1.5px solid var(--gold);background:color-mix(in srgb,var(--gold) 8%,var(--card))}
+.prev p{margin:4px 0}
+.note{font-size:.75rem;color:var(--muted);text-align:center;margin-top:6px}
+nav{display:flex;background:var(--card);border-top:1px solid var(--line);padding:4px 4px 6px}
+nav button{flex:1;position:relative;background:none;color:var(--muted);padding:8px 0 4px;font-size:.62rem;display:flex;flex-direction:column;align-items:center;gap:3px;border-radius:0}
+nav button b{display:grid;place-items:center;font-weight:400}
+nav button svg{width:22px;height:22px}
+nav button.on{color:var(--text);font-weight:600}
+nav button.on svg{color:var(--accent)}
+nav button.on::before{content:'';position:absolute;top:-5px;left:30%;right:30%;height:3px;border-radius:0 0 3px 3px;background:var(--gold)}
+.fab{position:fixed;inset-inline-end:-12px;bottom:34%;width:50px;height:50px;padding-inline-end:12px;border-radius:50%;background:linear-gradient(145deg,#E3C77A,#C8A04A);color:#2A1E05;display:grid;place-items:center;box-shadow:0 8px 20px rgba(14,26,43,.38);z-index:20}
+.fab svg{width:22px;height:22px}
+.fab.rec{background:var(--red);color:#fff;animation:p 1s infinite}
+#toast{position:fixed;left:12px;right:12px;bottom:90px;max-width:440px;margin:auto;background:#0E1A2B;color:#fff;border-radius:14px;padding:10px 14px;z-index:30;display:none}
+#toast .chip{margin:6px 0 0;background:transparent;color:#fff;border-color:rgba(255,255,255,.5)}
+@media print{nav,.noprint,.fab,#toast{display:none!important}html,body{height:auto;display:block;background:#fff}#app{height:auto;max-width:none}#screen{overflow:visible;padding:0}.paper{border:0!important}}
+</style>
+</head>
+<body>
+<div id="app"><div id="screen"></div>
+<nav id="nav"></nav></div>
+<button id="fab" class="fab" onclick="fabTap()" aria-label="mic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0014 0M12 18v3"/></svg></button><div id="toast"></div>
+<script>
+const $=s=>document.querySelector(s);
+const ICO={home:'<path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/>',list:'<path d="M9 6h12M9 12h12M9 18h12"/><circle cx="4.5" cy="6" r="1"/><circle cx="4.5" cy="12" r="1"/><circle cx="4.5" cy="18" r="1"/>',spark:'<path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/><path d="M19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/>',chart:'<path d="M4 20V10M10 20V4M16 20v-7M2 20h20"/>',report:'<path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5M9 13h6M9 17h6"/>',team:'<circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.5 2.7-6 6-6s6 2.5 6 6"/><circle cx="17" cy="9" r="2.5"/><path d="M16 14c3 0 5 2 5 5"/>',shield:'<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/>',gear:'<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/>',mic:'<rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0014 0M12 18v3"/>',food:'<path d="M6 3v7a2 2 0 002 2v9M10 3v7M8 3v7M17 3c-2 2-2 6 0 8v10"/>',car:'<path d="M3 17v-4l2.2-5.5A1 1 0 016.1 7h11.8a1 1 0 01.9.5L21 13v4M3 13h18"/><circle cx="7.5" cy="17" r="1.8"/><circle cx="16.5" cy="17" r="1.8"/>',bolt:'<path d="M13 2L5 14h6l-1 8 8-12h-6z"/>',cross:'<path d="M12 5v14M5 12h14"/>',wrench:'<path d="M14 6a4 4 0 005 5l-9 9a2 2 0 01-3-3l9-9z"/>',down:'<path d="M12 4v14M6 12l6 6 6-6"/>',swap:'<path d="M5 8h13l-3-3M19 16H6l3 3"/>',dots:'<circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/>'};
+const ic=(n,sz)=>`<svg viewBox="0 0 24 24" width="${sz||22}" height="${sz||22}" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${ICO[n]}</svg>`;
+const CI={'طعام':'food','مواصلات':'car','فواتير':'bolt','أدوية':'cross','صيانة':'wrench','دخل':'down','دين':'swap','أخرى':'dots'};
+function guil(w,h){let d='';const N=26;for(let i=0;i<N;i++){const y0=i*h/(N-1);let p='';for(let x=0;x<=w;x+=8){const y=y0+14*Math.sin(x/38+i*.46)+7*Math.sin(x/15-i*.31);p+=(x?'L':'M')+x+' '+y.toFixed(1)}d+=`<path d="${p}"/>`}return `<svg class="gl" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" fill="none" stroke="rgba(255,255,255,.11)" stroke-width="1">${d}</svg>`}
+function spark(){const v=[...Array(14).keys()].reverse().map(k=>sum(x=>x.t==='out'&&x.d===k)),mx=Math.max(...v,1),w=300,h=44,pt=v.map((a,i)=>[i*w/13,h-4-a/mx*(h-12)]),ln=pt.map((p,i)=>(i?'L':'M')+p[0].toFixed(1)+' '+p[1].toFixed(1)).join('');return `<svg class="spark" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none"><path d="${ln}L${w} ${h}L0 ${h}Z" fill="rgba(227,199,122,.16)"/><path d="${ln}" fill="none" stroke="#E3C77A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`}
+
+let lang='ar';try{lang=localStorage.getItem('hl')||'ar'}catch(e){}
+const L=(a,f,e)=>lang==='ar'?a:lang==='fr'?f:e;
+const LEG={'دولار':'USD','يورو':'EUR','دينار':'DZD','ريال':'SAR','درهم':'AED','جنيه':'EGP','ليرة':'TRY'};
+let cur='USD';try{const c0=localStorage.getItem('hc');if(c0)cur=LEG[c0]||c0}catch(e){}
+let CURS=['USD','EUR','GBP','DZD','MAD','TND','EGP','SAR','AED','TRY','CHF','CAD','JPY','CNY','INR'];try{if(Intl.supportedValuesOf)CURS=Intl.supportedValuesOf('currency')}catch(e){}
+const cn=c=>c;
+const curName=c=>{try{return new Intl.DisplayNames([lang],{type:'currency'}).of(c)}catch(e){return c}};
+const fmt=n=>Math.round(n).toLocaleString('en-US')+' '+cn(cur);
+const MNS={ar:['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'],fr:['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'],en:['January','February','March','April','May','June','July','August','September','October','November','December']};
+const monthNames=l=>{if(MNS[l])return MNS[l];try{const f=new Intl.DateTimeFormat(l,{month:'long',timeZone:'UTC'});return [...Array(12).keys()].map(i=>f.format(new Date(Date.UTC(2024,i,1))))}catch(e){return MNS.en}};let MN=monthNames(lang);
+const CATS={'طعام':['Alimentation','Food'],'مواصلات':['Transport','Transport'],'فواتير':['Factures','Bills'],'أدوية':['Santé','Health'],'صيانة':['Réparations','Repairs'],'دخل':['Revenu','Income'],'دين':['Dette','Debt'],'أخرى':['Autre','Other']};
+const PARTY={'الراتب':['Salaire','Salary'],'إيجار المنزل':['Loyer','Rent'],'مطعم الأصالة':['Restaurant El Asala','El Asala Restaurant'],'البقالة':['Épicerie','Grocery'],'سوق الخضار':['Marché','Vegetable market'],'تاكسي':['Taxi','Taxi'],'بنزين':['Essence','Fuel'],'فاتورة الكهرباء':["Facture d'électricité",'Electricity bill'],'الإنترنت':['Internet','Internet'],'صيدلية الشفاء':['Pharmacie Chifa','Chifa Pharmacy'],'المصلح فلان':['Réparateur','The repairman'],'فني السباكة':['Plombier','Plumber'],'أحمد':['Ahmed','Ahmed'],'غير محدد':['Non précisé','Unspecified']};
+const tx=(M,k)=>lang==='ar'||!M[k]?k:M[k][lang==='fr'?0:1],C=c=>tx(CATS,c),P=p=>tx(PARTY,p);
+const TODAY=new Date(),pad=n=>String(n).padStart(2,'0'),TS=TODAY.getFullYear()+'-'+pad(TODAY.getMonth()+1)+'-'+pad(TODAY.getDate());
+const dayDiff=d=>Math.round((new Date(TODAY.getFullYear(),TODAY.getMonth(),TODAY.getDate())-new Date(d+'T00:00:00'))/864e5);
+function seed(){let r=7;const rnd=()=>{r=(r*16807)%2147483647;return r/2147483647};const out=[],Y=TODAY.getFullYear();
+ const PP=[['طعام',['مطعم الأصالة','البقالة','سوق الخضار'],20000,90000],['مواصلات',['تاكسي','بنزين'],10000,50000],['فواتير',['فاتورة الكهرباء','الإنترنت'],60000,140000],['أدوية',['صيدلية الشفاء'],20000,90000],['صيانة',['المصلح فلان','فني السباكة'],40000,150000]];
+ for(let y=Y-2;y<=Y;y++)for(let m=1;m<=12;m++){
+  const mk=(day,t,amt,party,cat)=>{const s=y+'-'+pad(m)+'-'+pad(day);if(s<=TS)out.push({t,amt:Math.round(amt/1000)*1000,party,cat,date:s})};
+  mk(27,'in',1500000*(1+.1*(y-Y+2)),'الراتب','دخل');mk(1,'out',400000,'إيجار المنزل','فواتير');mk(9,'out',55000,'مطعم الأصالة','طعام');mk(9,'out',30000,'صيدلية الشفاء','أدوية');
+  const n=8+Math.floor(rnd()*5);
+  for(let i=0;i<n;i++){const p=PP[Math.floor(rnd()*PP.length)];mk(1+Math.floor(rnd()*28),'out',p[2]+rnd()*(p[3]-p[2]),p[1][Math.floor(rnd()*p[1].length)],p[0])}
+  if(rnd()<.15)mk(10,'debt',30000+rnd()*70000,'أحمد','دين');if(y===Y&&m===6){mk(14,'out',90000,'فني السباكة','صيانة');mk(16,'out',90000,'فني السباكة','صيانة')}if(y===Y&&m===7)mk(20,'out',480000,'المصلح فلان','صيانة')}
+ return out}
+let data=null;try{const s0=localStorage.getItem('hd3');if(s0)data=JSON.parse(s0)}catch(e){}
+if(!data)data=seed();data.forEach(x=>x.d=dayDiff(x.date));
+const save=()=>{try{localStorage.setItem('hd3',JSON.stringify(data))}catch(e){}};
+const greet=()=>({r:'ai',x:L('أهلاً! اسألني عن مصروفاتك، أو اضغط أحد الأسئلة السريعة.','Bonjour ! Posez-moi une question sur vos dépenses ou touchez une question rapide.','Hi! Ask me about your spending or tap a quick question.')});
+
+let plan=null;try{plan=localStorage.getItem('hp')||null}catch(e){}
+const PL={
+ ind:{n:()=>L('فردي','Individuel','Personal'),p:'2.99 $',f:()=>L(['تسجيل بالنص الحر والصوت','المساعد الذكي (أسئلة يومية محدودة)','الإحصاء بالسنة والشهر والأسبوع واليوم','عدة عملات ولغات'],['Saisie libre et vocale','Assistant IA (questions quotidiennes limitées)','Stats par année, mois, semaine, jour','Devises et langues multiples'],['Free-text and voice entry','AI assistant (limited daily questions)','Stats by year, month, week, day','Multiple currencies and languages'])},
+ biz:{n:()=>L('صاحب عمل','Entreprise','Business'),p:'~20-25 $',f:()=>L(['كل ميزات الفردي','التقارير الرسمية القابلة للطباعة','كشف العمليات المرقّم وشرح كل عملية','الموظفون والصلاحيات (حتى 5)'],['Tout le plan Individuel','Rapports officiels imprimables','Journal numéroté, chaque opération expliquée','Équipe et rôles (jusqu’à 5)'],['Everything in Personal','Official printable reports','Numbered list, each transaction explained','Team and roles (up to 5)'])},
+ adv:{n:()=>L('صاحب عمل متقدم','Entreprise avancé','Advanced business'),p:'≤ 50 $',f:()=>L(['كل ميزات الأعمال','المراقبة وكشف الشواذ والتنبيهات','سجل التدقيق: من فعل ماذا ومتى','إرفاق الفواتير والتصدير للمحاسب','عدد موظفين أكبر (حتى 20)'],['Tout le plan Entreprise','Surveillance et détection d’anomalies','Journal d’audit : qui a fait quoi, quand','Factures jointes et export comptable','Plus d’employés (jusqu’à 20)'],['Everything in Business','Monitoring and anomaly detection','Audit log: who did what and when','Attached invoices and accountant export','More team members (up to 20)'])}};
+let upg=false;function showUpgrade(){upg=true;render()}
+function resetDemo(){extra=0;seatAsk=false;team=team.slice(0,4);setPlan(null)}
+function setPlan(k){plan=k;paywall=null;upg=false;try{k?localStorage.setItem('hp',k):localStorage.removeItem('hp')}catch(e){}tab='home';showRep=false;render()}
+let extra=0,seatAsk=false,paywall=null;
+function pick(k){if(k==='ind')setPlan(k);else{paywall=k;render()}}
+function startPlan(k){paywall=null;upg=false;setPlan(k)}
+function buySeat(){extra++;seatAsk=false;render()}
+function seatCardHTML(){const base=plan==='adv'?50:22,lim=(plan==='adv'?20:5)+extra,bill=(base+extra*2.5).toFixed(1).replace('.0','');
+ let t=`<div class="card"><div class="row" style="justify-content:space-between"><span>${L('الفاتورة الشهرية التقديرية','Facture mensuelle estimée','Estimated monthly bill')}</span><b>${bill} $</b></div><div class="muted">${L(`الباقة ${base} $ + ${extra} مقعد إضافي × 2.5 $`,`Offre ${base} $ + ${extra} siège(s) × 2,5 $`,`Plan $${base} + ${extra} extra seat(s) × $2.5`)} · ${L('الحد الحالي','Limite actuelle','Current limit')}: ${lim}</div>`;
+ if(seatAsk)t+=`<div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--line)"><p style="margin:0 0 8px">${L('وصلت لحد الفريق. يمكنك إضافة مقعد بنحو 2.5 دولار شهرياً.','Limite d’équipe atteinte. Ajoutez un siège pour environ 2,5 $ par mois.','Team limit reached. You can add a seat for about $2.5 per month.')}</p><div class="row" style="flex-wrap:wrap"><button class="btn" onclick="buySeat()">${L('＋ شراء مقعد إضافي','＋ Acheter un siège','＋ Buy an extra seat')}</button>${plan==='biz'?`<button class="btn2" onclick="pick('adv')">${L('الترقية للمتقدم','Passer à Avancé','Upgrade to Advanced')}</button>`:''}</div>${plan==='adv'?`<div class="muted" style="margin-top:6px">${L('وللشركات الكبيرة جداً: باقة مؤسسات بسعر مخصص (تواصل معنا).','Très grandes entreprises : offre sur mesure (contactez-nous).','Very large companies: custom enterprise plan (contact us).')}</div>`:''}</div>`;
+ return t+'</div>'}
+let team=[{n:'owner',r:'owner'},{n:'سامر',r:'entry'},{n:'ليلى',r:'approve'},{n:'كريم',r:'view'}];
+const RL=()=>({owner:L('مالك','Propriétaire','Owner'),entry:L('يُدخل العمليات','Saisit les opérations','Enters transactions'),approve:L('يعتمد العمليات','Valide les opérations','Approves transactions'),view:L('مشاهدة فقط (محاسب)','Lecture seule (comptable)','View only (accountant)')});
+const mName=m=>m.n==='owner'?L('أنت','Vous','You'):m.n;
+function addMember(){const nm=$('#mname').value.trim();if(!nm)return;const lim=(plan==='adv'?20:5)+extra;if(team.length>=lim){seatAsk=true;render();return}team.push({n:nm,r:$('#mrole').value});render()}
+function upsellHTML(){if(plan==='biz')return `<div class="card" style="border-style:dashed"><h3>${L('🔒 المراقبة وسجل التدقيق','🔒 Surveillance et journal d’audit','🔒 Monitoring and audit log')}</h3><p class="muted" style="margin:0 0 8px">${L('كشف الشواذ، سجل من فعل ماذا ومتى، وإرفاق الفواتير.','Détection d’anomalies, journal d’audit et factures jointes.','Anomaly detection, audit log and attached invoices.')}</p><button class="btn" onclick="showUpgrade()">${L('ترقية الباقة','Améliorer l’offre','Upgrade plan')}</button></div>`;return `<div class="card" style="border-style:dashed"><h3>${L('🔒 ميزات الأعمال','🔒 Fonctions Entreprise','🔒 Business features')}</h3><p class="muted" style="margin:0 0 8px">${L('تقارير رسمية، موظفون وصلاحيات، مراقبة وكشف شواذ.','Rapports officiels, équipe et rôles, surveillance des anomalies.','Official reports, team and roles, anomaly monitoring.')}</p><button class="btn" onclick="showUpgrade()">${L('ترقية الباقة','Voir les offres','See plans')}</button></div>`}
+let per='week',tab='home',pending=null,rec=false,chat=[greet()],multi=false,showRep=false;
+let sel={y:[TODAY.getFullYear()],m:null,w:null,d:null};
+const sum=f=>data.filter(f).reduce((a,x)=>a+x.amt,0);
+const bal=()=>sum(x=>x.t==='in')-sum(x=>x.t!=='in');
+const outs=days=>data.filter(x=>x.t==='out'&&x.d<days);
+function cats(days){const m={};outs(days).forEach(x=>m[x.cat]=(m[x.cat]||0)+x.amt);return Object.entries(m).sort((a,b)=>b[1]-a[1])}
+const scCats=l=>{const m={};l.forEach(x=>m[x.cat]=(m[x.cat]||0)+x.amt);return Object.entries(m).sort((a,b)=>b[1]-a[1])};
+function parse(s){
+ s=s.replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d));
+ const m=s.match(/(\d[\d,٬.]*)\s*(ألف|الف|مليون|millions?|thousand|mille|k\b)?/i);if(!m)return null;
+ let a=parseFloat(m[1].replace(/[,٬]/g,''));if(!a)return null;if(m[2])a*=/مليون|million/i.test(m[2])?1e6:1000;
+ const VB=/(دفعت|صرفت|استلمت|قبضت|أقرضت|اقرضت|i paid|paid|spent|received|lent|j'ai payé|j'ai dépensé|payé|dépensé|reçu|prêté)/gi;
+ let rest=s.slice(m.index+m[0].length).trim().replace(/^(إلى|الى|على|في|من)\s*/,'').replace(/^(to|at|for|on|from|à|au|aux|chez|pour|sur|de|du)\s+/i,'').replace(/^لل(?=[\u0600-\u06FF])/,'ال').replace(/^ل(?=[\u0600-\u06FF])/,'').trim();
+ if(!rest)rest=s.slice(0,m.index).replace(VB,'').trim();if(!rest)rest='غير محدد';
+ let t='out';if(/استلمت|قبضت|راتب|دخل|received|salary|earned|reçu|salaire|gagné/i.test(s))t='in';else if(/أقرضت|اقرضت|استلف|دين|lent|loaned|prêté|dette/i.test(s))t='debt';
+ const c=[['صيانة',/مصلح|صيانة|سباك|كهربائي|ميكانيك|plumb|repair|mechanic|répar|plombier/i],['طعام',/طعام|مطعم|خبز|بقال|خضار|عشاء|غداء|فطور|food|restaurant|grocer|lunch|dinner|épicerie|nourriture|repas/i],['أدوية',/دوا|دواء|صيدلية|طبيب|مستشفى|pharmac|medic|doctor|médecin|hospital|hôpital/i],['مواصلات',/بنزين|تاكسي|اجرة|أجرة|باص|fuel|gas|taxi|bus|essence|transport/i],['فواتير',/فاتورة|كهرباء|ماء|انترنت|إيجار|ايجار|bill|electric|rent|internet|facture|loyer/i]];
+ let cat=t==='in'?'دخل':t==='debt'?'دين':'أخرى';if(t==='out')for(const[k,r]of c)if(r.test(s)){cat=k;break}
+ return{t,amt:a,party:rest,cat,d:0,date:TS}}
+function answer(q){
+ q=q.replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d));
+ const yy=q.match(/20\d\d/);
+ if(yy){const o=data.filter(x=>x.t==='out'&&x.date.startsWith(yy[0])),tot=o.reduce((a,x)=>a+x.amt,0);if(!o.length)return L('لا توجد بيانات لسنة '+yy[0],'Aucune donnée pour '+yy[0],'No data for '+yy[0]);
+  return L(`مصروف ${yy[0]}: ${fmt(tot)} على ${o.length} عملية.`,`Dépenses ${yy[0]} : ${fmt(tot)} sur ${o.length} opérations.`,`Spending in ${yy[0]}: ${fmt(tot)} across ${o.length} transactions.`)+'\n'+scCats(o).map(x=>`• ${C(x[0])}: ${fmt(x[1])} (${Math.round(x[1]/tot*100)}%)`).join('\n')}
+ if(/أسبوع|اسبوع|week|semaine/i.test(q)){const o=outs(7),tot=o.reduce((a,x)=>a+x.amt,0),c=cats(7)[0],top=c?C(c[0])+' ('+fmt(c[1])+')':'-';
+  return L(`صرفت في آخر 7 أيام ${fmt(tot)} على ${o.length} عمليات.\nأكبر بند: ${top}.`,`Sur les 7 derniers jours, vous avez dépensé ${fmt(tot)} en ${o.length} opérations.\nPlus gros poste : ${top}.`,`In the last 7 days you spent ${fmt(tot)} across ${o.length} transactions.\nBiggest item: ${top}.`)}
+ if(/شهر|month|mois/i.test(q)){const tot=sum(x=>x.t==='out'&&x.d<30);return L(`مصروف آخر 30 يوماً: ${fmt(tot)}.\nمعدل يومي: ${fmt(tot/30)}.`,`30 derniers jours : ${fmt(tot)}.\nMoyenne par jour : ${fmt(tot/30)}.`,`Last 30 days: ${fmt(tot)}.\nDaily average: ${fmt(tot/30)}.`)}
+ if(/أين|اين|ذهبت|تصنيف|where|categor|où|catégor/i.test(q)){const c=cats(30),t=c.reduce((a,x)=>a+x[1],0);
+  return c.map(x=>`• ${C(x[0])}: ${fmt(x[1])} (${Math.round(x[1]/t*100)}%)`).join('\n')+'\n\n'+L(`نصيحة: أعلى بند عندك "${C(c[0][0])}"، حاول تخفيضه 10% الشهر القادم.`,`Conseil : votre plus gros poste est « ${C(c[0][0])} », essayez de le réduire de 10 % le mois prochain.`,`Tip: your biggest item is "${C(c[0][0])}", try cutting it by 10% next month.`)}
+ if(/راتب|قسم|وزع|توزيع|salary|split|divide|salaire|répart/i.test(q)){const m=q.match(/\d[\d,]*/);const v=m?parseInt(m[0].replace(/,/g,'')):1000000;
+  return L(`اقتراح لتوزيع ${fmt(v)}:\n• ضروريات (50%): ${fmt(v*.5)}\n• رغبات وترفيه (30%): ${fmt(v*.3)}\n• ادخار (20%): ${fmt(v*.2)}`,`Suggestion pour répartir ${fmt(v)} :\n• Essentiel (50 %) : ${fmt(v*.5)}\n• Loisirs (30 %) : ${fmt(v*.3)}\n• Épargne (20 %) : ${fmt(v*.2)}`,`Suggested split of ${fmt(v)}:\n• Needs (50%): ${fmt(v*.5)}\n• Wants (30%): ${fmt(v*.3)}\n• Savings (20%): ${fmt(v*.2)}`)}
+ if(/توقع|ينتهي|يكفي|forecast|last|run out|prévis|durer|suffi/i.test(q)){const avg=sum(x=>x.t==='out'&&x.d<30)/30,days=Math.floor(bal()/avg);
+  return L(`رصيدك ${fmt(bal())} ومعدل صرفك ${fmt(avg)} يومياً.\nبهذا المعدل يكفيك نحو ${days} يوماً.`,`Votre solde est de ${fmt(bal())} et vous dépensez ${fmt(avg)} par jour.\nÀ ce rythme, il dure environ ${days} jours.`,`Your balance is ${fmt(bal())} and you spend ${fmt(avg)} per day.\nAt this rate it lasts about ${days} days.`)}
+ if(/دين|ديون|أقرضت|debt|lent|dette|prêt/i.test(q)){const d=data.filter(x=>x.t==='debt');return d.length?d.map(x=>`• ${P(x.party)}: ${fmt(x.amt)}`).join('\n')+'\n'+L('المجموع','Total','Total')+': '+fmt(d.reduce((a,x)=>a+x.amt,0)):L('لا توجد ديون مسجلة.','Aucune dette enregistrée.','No debts recorded.')}
+ return L('سؤال جيد! في النسخة الحقيقية سيحلله الذكاء الاصطناعي. جرّب الأسئلة السريعة أعلاه.','Bonne question ! Dans la vraie version, l’IA l’analysera. Essayez les questions rapides ci-dessus.','Good question! In the real version the AI will analyze it. Try the quick questions above.')}
+const yrs=()=>[...new Set(data.map(x=>+x.date.slice(0,4)))].sort();
+const inSc=x=>{const y=+x.date.slice(0,4),m=+x.date.slice(5,7)-1,d=+x.date.slice(8,10);return sel.y.includes(y)&&(sel.m===null||m===sel.m)&&(sel.w===null||Math.floor((d-1)/7)===sel.w)&&(sel.d===null||d===sel.d)};
+function selY(y){if(!multi)sel.y=[y];else{const i=sel.y.indexOf(y);if(i>=0){if(sel.y.length>1)sel.y.splice(i,1)}else sel.y.push(y)}sel.m=sel.w=sel.d=null;render()}
+function togMulti(){multi=!multi;if(!multi)sel.y=[sel.y[0]];sel.m=sel.w=sel.d=null;render()}
+function selM(m){sel.m=m;sel.w=sel.d=null;render()}
+function selW(w){sel.w=w;sel.d=null;render()}
+function selD(d){sel.d=d;render()}
+const dim=()=>new Date(sel.y[0],(sel.m||0)+1,0).getDate();
+const WK=()=>L('أسبوع ','Semaine ','Week '),DY=()=>L('يوم ','Jour ','Day ');
+function fUI(){const ch=(on,fn,t)=>`<button class="chip ${on?'act':''}" onclick="${fn}">${t}</button>`,ALL=L('الكل','Tout','All');
+ let h=`<div class="card"><div class="muted">${L('السنة','Année','Year')}</div><div>${yrs().map(y=>ch(sel.y.includes(y),`selY(${y})`,y)).join('')}${ch(multi,'togMulti()',L('＋ مقارنة عدة سنوات','＋ Comparer des années','＋ Compare years'))}</div>`;
+ if(sel.y.length===1){h+=`<div class="muted">${L('الشهر','Mois','Month')}</div><div>${ch(sel.m===null,'selM(null)',ALL)+MN.map((n,i)=>ch(sel.m===i,`selM(${i})`,n)).join('')}</div>`;
+  if(sel.m!==null){const D=dim();h+=`<div class="muted">${L('الأسبوع','Semaine','Week')}</div><div>${ch(sel.w===null,'selW(null)',ALL)+[0,1,2,3,4].filter(w=>w*7+1<=D).map(w=>ch(sel.w===w,`selW(${w})`,WK()+(w+1))).join('')}</div>`;
+   if(sel.w!==null){const a=sel.w*7+1,b=Math.min(a+6,D);let ds='';for(let k=a;k<=b;k++)ds+=ch(sel.d===k,`selD(${k})`,k);h+=`<div class="muted">${L('اليوم','Jour','Day')}</div><div>${ch(sel.d===null,'selD(null)',ALL)+ds}</div>`}}}
+ return h+`</div>`+(plan==='ind'?`<div class="note" style="margin-bottom:12px">🔒 ${L('التقارير الرسمية متاحة في باقة الأعمال','Les rapports officiels sont dans l’offre Entreprise','Official reports are in the Business plan')} <button class="chip" style="margin:0" onclick="showUpgrade()">${L('ترقية الباقة','Voir les offres','See plans')}</button></div>`:`<button class="btn" style="width:100%;margin-bottom:12px" onclick="genRep()">${L('📄 إنشاء تقرير رسمي لهذه الفترة','📄 Générer un rapport officiel pour cette période','📄 Generate an official report for this period')}</button>`)}
+const scLabel=()=>sel.y.join(' + ')+(sel.m!==null?' / '+MN[sel.m]:'')+(sel.w!==null?' / '+WK()+(sel.w+1):'')+(sel.d!==null?' / '+DY()+sel.d:'');
+const MR=[/يناير|جانفي|janvier|january/i,/فبراير|فيفري|février|fevrier|february/i,/مارس|mars|march/i,/أبريل|ابريل|افريل|أفريل|avril|april/i,/مايو|mai\b|may\b/i,/يونيو|جوان|juin|june/i,/يوليو|جويلية|يوليوز|juillet|july/i,/أغسطس|اغسطس|أوت|اوت|غشت|août|aout|august/i,/سبتمبر|شتنبر|septembre|september/i,/أكتوبر|اكتوبر|octobre|october/i,/نوفمبر|نونبر|novembre|november/i,/ديسمبر|دجنبر|décembre|decembre|december/i];
+function cmdReport(text){
+ if(plan==='ind'){alert(L('التقارير الرسمية متاحة في باقة الأعمال','Les rapports officiels sont dans l’offre Entreprise','Official reports are in the Business plan'));return false}
+ let q=text.replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d));const ym=q.match(/20\d\d/),Y=ym?+ym[0]:TODAY.getFullYear();
+ if(!yrs().includes(Y)){alert(L('لا توجد بيانات لسنة ','Aucune donnée pour ','No data for ')+Y);return false}
+ q=q.replace(/20\d\d/,' ');const nums=(q.match(/\d{1,2}/g)||[]).map(Number);let mi=MR.findIndex(r=>r.test(q)),m=null,d=null;
+ if(mi>=0){m=mi;const n=nums.find(k=>k>=1&&k<=31);if(n)d=n}else{const n=nums.find(k=>k>=1&&k<=12);if(n)m=n-1}
+ sel={y:[Y],m:m,w:d?Math.floor((d-1)/7):null,d:d};multi=false;genRep();return true}
+function genRep(){exp={};showRep='loading';render();setTimeout(()=>{showRep=true;render()},1300)}
+const periodText=()=>sel.y.length>1?L('السنوات ','Années ','Years ')+sel.y.join(' & '):sel.d!==null?`${sel.d} ${MN[sel.m]} ${sel.y[0]}`:sel.w!==null?L(`الأسبوع ${sel.w+1} من ${MN[sel.m]} ${sel.y[0]}`,`Semaine ${sel.w+1} de ${MN[sel.m]} ${sel.y[0]}`,`Week ${sel.w+1} of ${MN[sel.m]} ${sel.y[0]}`):sel.m!==null?L('شهر ','','')+MN[sel.m]+' '+sel.y[0]:L('سنة ','Année ','Year ')+sel.y[0];
+function bRows(Ls){let ks,kf,lb;const D=dim();
+ if(sel.y.length>1){ks=[...sel.y].sort();kf=x=>+x.date.slice(0,4);lb=k=>k}
+ else if(sel.m===null){ks=[...Array(12).keys()];kf=x=>+x.date.slice(5,7)-1;lb=k=>MN[k]}
+ else if(sel.w===null){ks=[0,1,2,3,4].filter(w=>w*7+1<=D);kf=x=>Math.floor((+x.date.slice(8,10)-1)/7);lb=k=>WK()+(k+1)}
+ else if(sel.d===null){const a=sel.w*7+1,b=Math.min(a+6,D);ks=[];for(let k=a;k<=b;k++)ks.push(k);kf=x=>+x.date.slice(8,10);lb=k=>DY()+k}
+ else return null;
+ return ks.map(k=>{const z=Ls.filter(x=>kf(x)===k);return{lab:lb(k),inc:z.filter(x=>x.t==='in').reduce((a,x)=>a+x.amt,0),ex:z.filter(x=>x.t==='out').reduce((a,x)=>a+x.amt,0)}})}
+function prevEx(){let ps=null;if(sel.y.length===1&&sel.d===null&&sel.w===null){ps=sel.m===null?{y:[sel.y[0]-1],m:null,w:null,d:null}:sel.m>0?{y:[sel.y[0]],m:sel.m-1,w:null,d:null}:{y:[sel.y[0]-1],m:11,w:null,d:null}}
+ if(!ps)return null;const o=sel;sel=ps;const Ls=data.filter(x=>x.t==='out'&&inSc(x));sel=o;return Ls.length?Ls.reduce((a,x)=>a+x.amt,0):null}
+let exp={},curOps=[],keepScroll=false;
+function opInfo(x){const pr=data.filter(y=>y.t===x.t&&y.party===x.party&&y.date<x.date);if(!pr.length)return null;const avg=pr.reduce((a,y)=>a+y.amt,0)/pr.length;return{avg,k:pr.length,diff:x.amt-avg,pct:Math.round((x.amt-avg)/avg*100)}}
+function explain(x,n){const i=opInfo(x),v={out:L('دُفع','a été payé','was paid'),in:L('استُلم','a été reçu','was received'),debt:L('أُقرض','a été prêté','was lent')}[x.t],pt=x.t==='in'?L('من','de','from'):L('إلى','à','to');
+ let s=L(`العملية رقم ${n}: بتاريخ ${x.date} ${v} ${fmt(x.amt)} ${pt} «${P(x.party)}» ضمن تصنيف «${C(x.cat)}».`,`Opération n° ${n} : le ${x.date}, ${fmt(x.amt)} ${v} ${pt} « ${P(x.party)} » (catégorie « ${C(x.cat)} »).`,`Transaction #${n}: on ${x.date}, ${fmt(x.amt)} ${v} ${pt} "${P(x.party)}" (category "${C(x.cat)}").`);
+ if(i){const up=i.diff>=0,a=Math.abs(i.diff),p=Math.abs(i.pct);s+=' '+L(`متوسط عملياتك السابقة مع هذه الجهة (${i.k} عملية) هو ${fmt(i.avg)}، وهذه ${up?'أعلى':'أقل'} بـ ${fmt(a)} (${p}%).`,`La moyenne de vos ${i.k} opérations précédentes avec ce bénéficiaire est de ${fmt(i.avg)} ; celle-ci est ${up?'supérieure':'inférieure'} de ${fmt(a)} (${p} %).`,`The average of your ${i.k} previous transactions with this party is ${fmt(i.avg)}; this one is ${up?'higher':'lower'} by ${fmt(a)} (${p}%).`);
+  if(i.pct>=30)s+=' '+L('⚠️ ارتفاع ملحوظ، يُنصح بمراجعة الفاتورة والسبب (السبب غير مسجل، أضف ملاحظة أو صورة فاتورة ليدخل في الشرح).','⚠️ Hausse notable : vérifiez la facture et le motif (le motif n’est pas enregistré ; ajoutez une note ou une facture).','⚠️ Notable increase: check the invoice and the reason (the reason is not recorded; add a note or an invoice to include it).')}
+ else s+=' '+L('هذه أول عملية مسجلة مع هذه الجهة، فلا توجد مقارنة سابقة.','Première opération avec ce bénéficiaire : pas de comparaison possible.','First recorded transaction with this party, so there is nothing to compare with.');
+ return s}
+function toggleOp(n){exp[n]=!exp[n];keepScroll=true;render()}
+function explainFlagged(){curOps.forEach(o=>{if(o.flag)exp[o.n]=true});keepScroll=true;render()}
+function explainAll(){curOps.forEach(o=>exp[o.n]=true);keepScroll=true;render()}
+function hideAll(){exp={};keepScroll=true;render()}
+function reportHTML(){
+ const pt=periodText();
+ if(!data.some(inSc))return `<div class="card" style="margin-top:20px"><h3>${L('لا توجد عمليات في ','Aucune opération pour ','No transactions in ')}${pt}</h3><p class="muted">${L('جرّب فترة أخرى.','Essayez une autre période.','Try another period.')}</p><button class="btn" onclick="showRep=false;render()">${L('رجوع','Retour','Back')}</button></div>`;
+ const Ls=data.filter(inSc),O=Ls.filter(x=>x.t==='out'),sm=(l,t)=>l.filter(x=>x.t===t).reduce((a,x)=>a+x.amt,0),inc=sm(Ls,'in'),ex=sm(Ls,'out'),db=sm(Ls,'debt'),net=inc-ex-db,c=scCats(O),pm={};
+ O.forEach(x=>pm[x.party]=(pm[x.party]||0)+x.amt);const tp=Object.entries(pm).sort((a,b)=>b[1]-a[1]).slice(0,5),rows=bRows(Ls),pe=prevEx();
+ const pc=v=>ex?Math.round(v/ex*100)+'%':'-',ab=Math.abs(net);
+ let s1=L(`خلال ${pt} بلغ إجمالي الدخل ${fmt(inc)} وإجمالي المصروفات ${fmt(ex)}${db?` إضافة إلى ديون مُقرَضة ${fmt(db)}`:''}، فكان الصافي ${net>=0?'فائضاً':'عجزاً'} قدره ${fmt(ab)}.`,
+  `Sur ${pt}, le revenu total s’élève à ${fmt(inc)} et les dépenses à ${fmt(ex)}${db?`, plus ${fmt(db)} de prêts accordés`:''}. Le résultat net est un ${net>=0?'excédent':'déficit'} de ${fmt(ab)}.`,
+  `During ${pt}, total income was ${fmt(inc)} and total expenses ${fmt(ex)}${db?`, plus ${fmt(db)} in loans given`:''}, leaving a net ${net>=0?'surplus':'deficit'} of ${fmt(ab)}.`);
+ if(c.length)s1+=' '+L(`أكبر بنود المصروف هو «${C(c[0][0])}» بنسبة ${pc(c[0][1])} من الإجمالي.`,`Le plus gros poste est « ${C(c[0][0])} » (${pc(c[0][1])} du total).`,`The largest expense item is "${C(c[0][0])}" (${pc(c[0][1])} of the total).`);
+ if(pe){const ch=Math.abs(Math.round((ex-pe)/pe*100));s1+=' '+L(`وبالمقارنة مع الفترة السابقة ${ex>=pe?'ارتفع':'انخفض'} المصروف بنسبة ${ch}%.`,`Par rapport à la période précédente, les dépenses ont ${ex>=pe?'augmenté':'diminué'} de ${ch} %.`,`Compared with the previous period, expenses ${ex>=pe?'rose':'fell'} by ${ch}%.`)}
+ if(rows&&rows.length>1){const mx=rows.reduce((a,b)=>b.ex>a.ex?b:a);s1+=' '+L(`وكانت أعلى فترة صرفاً هي ${mx.lab} (${fmt(mx.ex)}).`,`La période la plus dépensière est ${mx.lab} (${fmt(mx.ex)}).`,`The highest-spending period was ${mx.lab} (${fmt(mx.ex)}).`)}
+ const rec=[];if(c.length&&c[0][1]/ex>.35)rec.push(L(`بند «${C(c[0][0])}» يستهلك أكثر من ثلث المصروف، يُنصح بمراجعته والتفاوض على تكاليفه.`,`Le poste « ${C(c[0][0])} » dépasse un tiers des dépenses : à examiner et à renégocier.`,`"${C(c[0][0])}" takes over a third of spending: review it and negotiate its costs.`));
+ if(net<0)rec.push(L('الصافي سالب في هذه الفترة، يُنصح بتأجيل المصروفات غير الضرورية وضبط الميزانية.','Le résultat est négatif : reportez les dépenses non essentielles et resserrez le budget.','The net result is negative: postpone non-essential spending and tighten the budget.'));
+ else rec.push(L(`يُقترح ادخار ما لا يقل عن 20% من الدخل (${fmt(inc*.2)}).`,`Il est conseillé d’épargner au moins 20 % du revenu (${fmt(inc*.2)}).`,`Saving at least 20% of income is suggested (${fmt(inc*.2)}).`));
+ if(db)rec.push(L('يُنصح بمتابعة تحصيل الديون المُقرَضة وتوثيقها.','Suivez et documentez le recouvrement des prêts accordés.','Track and document the collection of loans given.'));
+ const th='style="text-align:start;border-bottom:2px solid #333;padding:6px"',td='style="border-bottom:1px solid #ddd;padding:6px"';
+ const tbl=(hd,rw)=>`<table style="width:100%;border-collapse:collapse;font-size:.85rem;margin:6px 0 14px"><tr>${hd.map(x=>`<th ${th}>${x}</th>`).join('')}</tr>${rw.map(r=>`<tr>${r.map(x=>`<td ${td}>${x}</td>`).join('')}</tr>`).join('')}</table>`;
+ const H=t=>`<h4 style="margin:14px 0 4px;border-inline-start:4px solid #0f766e;padding-inline-start:8px">${t}</h4>`,none=`<p style="margin:0">${L('لا شيء.','Aucun.','None.')}</p>`;
+ const ops=O.slice().sort((a,b)=>b.amt-a.amt).slice(0,15);let n=0;const N=()=>(++n)+'. ';
+ const list=Ls.slice().sort((a,b)=>a.date.localeCompare(b.date));curOps=list.map((x,i)=>{const o=opInfo(x);return{x,n:i+1,flag:!!(o&&o.pct>=30),o}});
+ const nf=curOps.filter(o=>o.flag).length,sg=v=>(v>=0?'+':'−');
+ const opsRows=curOps.map(({x,n,flag,o})=>`<tr style="${flag?'background:#fff4e5':''}"><td ${td}>${n}</td><td ${td}>${x.date}</td><td ${td}>${P(x.party)}</td><td ${td}>${fmt(x.amt)}</td><td ${td}>${o?sg(o.diff)+fmt(Math.abs(o.diff))+' ('+sg(o.diff)+Math.abs(o.pct)+'%)':'—'}</td><td ${td} class="noprint"><button class="chip" style="margin:0" onclick="toggleOp(${n})">🔍</button></td></tr>${exp[n]?`<tr><td colspan="6" style="border-bottom:1px solid #ddd;padding:6px;background:#eef7f5;font-size:.8rem">${explain(x,n)}</td></tr>`:''}`).join('');
+ const opsHTML=H(N()+L('كشف العمليات المرقّم','Journal numéroté des opérations','Numbered transaction list'))+`<p style="margin:0 0 6px;font-size:.85rem">${L(`${Ls.length} عملية، منها ${nf} ملفتة (ارتفاع 30% فأكثر عن المعتاد).`,`${Ls.length} opérations, dont ${nf} à surveiller (hausse de 30 % ou plus par rapport à l’habitude).`,`${Ls.length} transactions, ${nf} of them flagged (30% or more above the usual).`)}</p><div class="noprint row" style="margin-bottom:8px;flex-wrap:wrap"><button class="chip" style="margin:0" onclick="explainFlagged()">${L('فسّر الملفت','Expliquer les écarts','Explain flagged')}</button><button class="chip" style="margin:0" onclick="explainAll()">${L('فسّر الكل','Tout expliquer','Explain all')}</button><button class="chip" style="margin:0" onclick="hideAll()">${L('إخفاء الشرح','Masquer','Hide')}</button></div><table style="width:100%;border-collapse:collapse;font-size:.8rem"><tr><th ${th}>#</th><th ${th}>${L('التاريخ','Date','Date')}</th><th ${th}>${L('الجهة','Bénéficiaire','Recipient')}</th><th ${th}>${L('المبلغ','Montant','Amount')}</th><th ${th}>${L('مقارنة بالمعتاد','Écart vs habituel','vs usual')}</th><th ${th} class="noprint"></th></tr>${opsRows}</table>`;
+ return `<div class="noprint row" style="margin-bottom:10px"><button class="btn" onclick="try{window.print()}catch(e){alert('Print')}">${L('🖨️ طباعة / حفظ PDF','🖨️ Imprimer / PDF','🖨️ Print / save PDF')}</button>${plan==='adv'?`<button class="btn2" onclick="alert('${L('في النسخة الحقيقية: ملف Excel/PDF جاهز للمحاسب','Dans la vraie version : fichier Excel/PDF pour le comptable','In the real version: Excel/PDF file for the accountant')}')">${L('📤 للمحاسب','📤 Comptable','📤 Accountant')}</button>`:''}<button class="btn2" onclick="showRep=false;render()">${L('رجوع','Retour','Back')}</button></div>
+ <div class="paper" style="background:#fff;color:#111;border:1px solid #ccc;border-radius:6px;padding:22px 18px;line-height:1.8">
+ <div style="text-align:center;border-bottom:3px double #0f766e;padding-bottom:10px"><div style="font-size:.8rem;color:#555">${L('حسابي الذكي','Mon Compte Intelligent','Smart Account')}</div><div style="font-size:1.35rem;font-weight:700">${L('التقرير المالي','Rapport financier','Financial Report')}</div><div>${L('الفترة: ','Période : ','Period: ')}${pt}</div></div>
+ <div style="display:flex;justify-content:space-between;font-size:.8rem;color:#555;margin:8px 0"><span>${L('رقم التقرير: ','N° du rapport : ','Report no.: ')}R-${TS.replace(/-/g,'')}-${Ls.length}</span><span>${L('تاريخ الإصدار: ','Date d’émission : ','Issued: ')}${TS}</span></div>
+ ${H(N()+L('الملخص التنفيذي','Résumé exécutif','Executive summary'))}<p style="margin:0">${s1}</p>
+ ${H(N()+L('بيان الدخل والمصروف','Compte de résultat','Income & expense statement'))}${tbl([L('البند','Poste','Item'),L('المبلغ','Montant','Amount')],[[L('إجمالي الدخل','Total des revenus','Total income'),fmt(inc)],[L('إجمالي المصروفات','Total des dépenses','Total expenses'),fmt(ex)],[L('ديون مُقرَضة','Prêts accordés','Loans given'),fmt(db)],['<b>'+L('الصافي','Net','Net')+'</b>','<b>'+fmt(net)+'</b>'],[L('عدد العمليات','Nombre d’opérations','Transactions'),Ls.length]])}
+ ${H(N()+L('المصروف حسب التصنيف','Dépenses par catégorie','Expenses by category'))}${c.length?tbl([L('التصنيف','Catégorie','Category'),L('المبلغ','Montant','Amount'),L('النسبة','Part','Share')],c.map(x=>[C(x[0]),fmt(x[1]),pc(x[1])])):none}
+ ${rows?H(N()+L('التوزيع خلال الفترة','Répartition sur la période','Breakdown over the period'))+tbl([L('الفترة','Période','Period'),L('الدخل','Revenu','Income'),L('المصروف','Dépenses','Expenses'),L('الصافي','Net','Net')],rows.map(r=>[r.lab,fmt(r.inc),fmt(r.ex),fmt(r.inc-r.ex)])):''}
+ ${H(N()+L('أكبر الجهات المستلمة للمال','Principaux bénéficiaires','Top recipients'))}${tp.length?tbl([L('الجهة','Bénéficiaire','Recipient'),L('المبلغ','Montant','Amount')],tp.map(x=>[P(x[0]),fmt(x[1])])):none}
+ ${opsHTML}
+ ${H(L('الملاحظات والتوصيات','Observations et recommandations','Notes & recommendations'))}<ul style="margin:0;padding-inline-start:1.2rem">${rec.length?rec.map(r=>`<li>${r}</li>`).join(''):`<li>${L('لا توجد ملاحظات جوهرية.','Aucune remarque majeure.','No major remarks.')}</li>`}</ul>
+ <div style="display:flex;justify-content:space-between;margin-top:34px;font-size:.8rem"><span>${L('إعداد','Préparé par','Prepared by')}: ________</span><span>${L('مراجعة','Révisé par','Reviewed by')}: ________</span><span>${L('اعتماد','Approuvé par','Approved by')}: ________</span></div>
+ <div style="text-align:center;font-size:.7rem;color:#777;margin-top:14px">${L('أُنشئ هذا التقرير آلياً من العمليات المسجّلة في التطبيق','Rapport généré automatiquement à partir des opérations enregistrées','This report was generated automatically from the transactions recorded in the app')}</div></div>`}
+let fabRec=false,fabT=null;
+function toast(h,ms){const t=$('#toast');t.innerHTML=h;t.style.display='block';clearTimeout(fabT);if(ms)fabT=setTimeout(()=>{t.style.display='none'},ms)}
+function fabTap(){if(fabRec)return;fabRec=true;$('#fab').classList.add('rec');toast(L('🎤 جارٍ الاستماع… قل مثلاً: دفعت 45 ألف للمطعم','🎤 J’écoute… dites par ex. : j’ai payé 45 mille au restaurant','🎤 Listening… say e.g.: I paid 45k to the restaurant'));
+ const S=L(['دفعت 45 ألف لمطعم الأصالة','صرفت 20,000 على بنزين','استلمت 300 ألف من أخي','أقرضت سامر 100,000'],['J’ai payé 45 mille au restaurant','J’ai dépensé 20 000 en essence','Reçu 300 mille de mon frère','J’ai prêté 100 000 à Samir'],['I paid 45k to the restaurant','I spent 20,000 on fuel','Received 300k from my brother','I lent 100,000 to Sam']);
+ setTimeout(()=>{fabRec=false;$('#fab').classList.remove('rec');const v=S[Math.floor(Math.random()*S.length)],p=parse(v);if(!p){toast(L('لم أفهم، حاول مرة أخرى','Je n’ai pas compris, réessayez','Didn’t catch that, try again'),3000);return}
+  data.push(p);save();render();toast(`<div style="font-size:.8rem;opacity:.8">${L('سمعت: ','J’ai entendu : ','Heard: ')}«${v}»</div><div>✅ ${L('تم التسجيل: ','Enregistré : ','Saved: ')}${fmt(p.amt)} · ${P(p.party)} · ${C(p.cat)}</div><button class="chip" onclick="undoFab()">${L('تراجع','Annuler','Undo')}</button>`,7000)},1400)}
+function undoFab(){data.pop();save();render();toast(L('تم التراجع','Annulé','Undone'),2000)}
+
+const ALLLANG=['ar','en','fr','es','pt','de','it','nl','tr','fa','ur','hi','bn','id','ms','ru','uk','pl','ro','el','he','th','vi','ko','ja','zh','sw','am','ha','yo','ig','zu','xh','af','so','ti','kab','zgh','ku','ckb','ps','sd','ug','kk','uz','tg','ky','tk','az','hy','ka','sq','sr','hr','bs','sl','cs','sk','hu','bg','mk','lt','lv','et','fi','sv','da','nb','is','ga','cy','ca','eu','gl','mt','lb','be','ta','te','ml','kn','mr','gu','pa','ne','si','my','km','lo','mn','fil','jv','su','mg','ny','sn','rw','wo','ln','bm','ff','dv'];
+const langAuto=c=>{try{return new Intl.DisplayNames([c],{type:'language'}).of(c)}catch(e){return c}};
+const langIn=c=>{try{return new Intl.DisplayNames([lang],{type:'language'}).of(c)}catch(e){return c}};
+const FULL=['ar','fr','en'];
+function curListHTML(q){q=(q||'').toLowerCase().trim();const L0=CURS.filter(c=>!q||c.toLowerCase().includes(q)||curName(c).toLowerCase().includes(q)).sort((a,b)=>(b===cur)-(a===cur));
+ return L0.slice(0,60).map(c=>`<div class="item" onclick="setCur('${c}')" style="cursor:pointer"><span><b>${c}</b> <span class="muted">${curName(c)}</span></span><span>${cur===c?'✅':''}</span></div>`).join('')||`<p class="muted">${L('لا نتائج','Aucun résultat','No results')}</p>`}
+function langListHTML(q){q=(q||'').toLowerCase().trim();const L0=ALLLANG.filter(c=>!q||c.toLowerCase().includes(q)||langAuto(c).toLowerCase().includes(q)||langIn(c).toLowerCase().includes(q)).sort((a,b)=>(b===lang)-(a===lang));
+ return L0.slice(0,80).map(c=>`<div class="item" onclick="setLang('${c}')" style="cursor:pointer"><span>${langAuto(c)} <span class="muted">· ${langIn(c)}</span>${FULL.includes(c)?'':` <span class="muted" style="font-size:.7rem">(EN)</span>`}</span><span>${lang===c?'✅':''}</span></div>`).join('')||`<p class="muted">${L('لا نتائج','Aucun résultat','No results')}</p>`}
+function filterCur(v){$('#curlist').innerHTML=curListHTML(v)}
+function filterLang(v){$('#langlist').innerHTML=langListHTML(v)}
+function seg(){if(plan==='ind')return '';const t=[['rep',L('الإحصاء','Stats','Stats')],['rpt',L('التقارير','Rapports','Reports')]];if(plan==='adv')t.push(['watch',L('المراقبة','Alertes','Alerts')]);return `<div class="row" style="margin-bottom:12px">${t.map(x=>`<button class="${tab===x[0]?'btn':'btn2'}" style="flex:1;padding:9px 0" onclick="tab='${x[0]}';render()">${x[1]}</button>`).join('')}</div>`}
+function setLang(l){lang=l;MN=monthNames(l);try{localStorage.setItem('hl',l)}catch(e){}document.documentElement.lang=l;document.documentElement.dir=l==='ar'?'rtl':'ltr';chat=[greet()];render()}
+function setCur(c){cur=c;try{localStorage.setItem('hc',c)}catch(e){}render()}
+function item(x){const lab=x.d===0?L('اليوم','Aujourd’hui','Today'):x.d===1?L('أمس','Hier','Yesterday'):x.date;
+ return `<div class="item"><div class="ib ${x.t}">${ic(CI[x.cat]||'dots')}</div><div style="flex:1;min-width:0"><div>${P(x.party)}</div><div class="muted">${C(x.cat)} · ${lab}</div></div><div class="${x.t==='in'?'in':'out'}">${x.t==='in'?'+':'-'}${fmt(x.amt)}</div></div>`}
+const LANGS=[['ar','العربية'],['fr','Français'],['en','English']];
+function render(){
+ const T={home:[ic('home'),L('الرئيسية','Accueil','Home')],log:[ic('list'),L('السجل','Journal','Log')],ai:[ic('spark'),L('المساعد','Assistant','Assistant')],rep:[ic('chart'),L('الإحصاء','Stats','Stats')],rpt:[ic('report'),L('التقارير','Rapports','Reports')],team:[ic('team'),L('الفريق','Équipe','Team')],watch:[ic('shield'),L('المراقبة','Alertes','Alerts')],set:[ic('gear'),L('الإعدادات','Réglages','Settings')]};
+ const order=plan==='ind'?['home','log','ai','rep','set']:['home','log','ai','rep','team','set'];
+ if(!order.includes(tab)&&!(tab==='rpt'&&plan!=='ind')&&!(tab==='watch'&&plan==='adv'))tab='home';
+ const tabs=order.map(k=>[k,T[k][0],T[k][1]]);
+ $('#nav').style.display=(showRep||!plan||paywall||upg)?'none':'';$('#fab').style.display=(plan&&!showRep&&!paywall&&!upg)?'':'none';
+ $('#nav').innerHTML=tabs.map(t=>`<button class="${(tab===t[0]||(t[0]==='rep'&&(tab==='rpt'||tab==='watch')))?'on':''}" onclick="tab='${t[0]}';render()"><b>${t[1]}</b>${t[2]}</button>`).join('');
+ const el=$('#screen');let h='';
+ if(paywall){const k=paywall;
+  el.innerHTML=`<div class="card" style="margin-top:20px"><div class="muted">${L('الخطوة الأخيرة','Dernière étape','Last step')}</div><h2 style="margin:4px 0">${PL[k].n()}</h2><div style="font-size:1.6rem;font-weight:700">${L('14 يوماً مجاناً','14 jours gratuits','14 days free')}</div><p class="muted">${L(`ثم ${PL[k].p} شهرياً. يُدفع عبر حسابك في Google Play أو App Store، ويمكنك الإلغاء في أي وقت.`,`puis ${PL[k].p} par mois. Payé via Google Play ou App Store, annulable à tout moment.`,`then ${PL[k].p} per month. Billed through Google Play or the App Store; cancel any time.`)}</p><ul style="padding-inline-start:1.2rem">${PL[k].f().map(x=>`<li>${x}</li>`).join('')}</ul><button class="btn" style="width:100%" onclick="startPlan('${k}')">${L('ابدأ التجربة المجانية','Démarrer l’essai gratuit','Start free trial')}</button><button class="btn2" style="width:100%;margin-top:8px" onclick="paywall=null;render()">${L('رجوع','Retour','Back')}</button><div class="note">${L('شاشة توضيحية: لا يتم أي دفع هنا.','Écran de démonstration : aucun paiement ici.','Demo screen: no payment happens here.')}</div></div>`;return}
+ if(upg){const ks=['ind','biz','adv'].slice(['ind','biz','adv'].indexOf(plan)+1);
+  el.innerHTML=`<h2 style="margin:6px 0">${L('ترقية الباقة','Améliorer votre offre','Upgrade your plan')}</h2><p class="muted" style="margin:0 0 10px">${L('الترقية تتم بالاشتراك عبر المتجر، ويمكن إلغاؤه من حسابك هناك.','L’amélioration se fait par abonnement via le store, annulable depuis votre compte.','Upgrading is done through a store subscription, which you can cancel from your account there.')}</p>`+ks.map(k=>`<div class="card"><div class="row" style="justify-content:space-between"><h3 style="margin:0">${PL[k].n()}</h3><b>${PL[k].p}<span class="muted"> / ${L('شهر','mois','mo')}</span></b></div><ul style="margin:8px 0;padding-inline-start:1.2rem">${PL[k].f().map(x=>`<li>${x}</li>`).join('')}</ul><button class="btn" style="width:100%" onclick="pick('${k}')">${L('ترقية','Améliorer','Upgrade')}</button></div>`).join('')+`<button class="btn2" style="width:100%" onclick="upg=false;render()">${L('رجوع','Retour','Back')}</button>`;return}
+ if(!plan){el.innerHTML=`<h2 style="margin:6px 0">${L('اختر نوع حسابك','Choisissez votre compte','Choose your account type')}</h2><p class="muted" style="margin:0 0 10px">${L('اختر الباقة المناسبة لك، ويمكنك الترقية لاحقاً.','Choisissez l’offre qui vous convient, vous pourrez l’améliorer plus tard.','Choose the plan that suits you; you can upgrade later.')}</p>`+['ind','biz','adv'].map(k=>`<div class="card"><div class="row" style="justify-content:space-between"><h3 style="margin:0">${PL[k].n()}</h3><b>${PL[k].p}<span class="muted"> / ${L('شهر','mois','mo')}</span></b></div><ul style="margin:8px 0;padding-inline-start:1.2rem">${PL[k].f().map(x=>`<li>${x}</li>`).join('')}</ul><button class="btn" style="width:100%" onclick="pick('${k}')">${L('اختيار','Choisir','Choose')}</button></div>`).join('')+`<div class="row" style="justify-content:center">${LANGS.map(g=>`<button class="chip act" style="margin:0 4px;${lang===g[0]?'':'opacity:.6'}" onclick="setLang('${g[0]}')">${g[1]}</button>`).join('')}</div>`;return}
+ if(showRep==='loading'){el.innerHTML=`<div class="card" style="text-align:center;margin-top:30vh"><h3>${L('✨ جارٍ إنشاء التقرير…','✨ Création du rapport…','✨ Creating the report…')}</h3><p class="muted">${L('يحلل الذكاء الاصطناعي عملياتك ويكتب التقرير','L’IA analyse vos opérations et rédige le rapport','The AI is analyzing your transactions and writing the report')}</p></div>`;return}
+ if(showRep===true){const st=el.scrollTop;el.innerHTML=reportHTML();el.scrollTop=keepScroll?st:0;keepScroll=false;return}
+ if(tab==='home'){
+  const today=sum(x=>x.t==='out'&&x.d===0);
+  h=`<div class="hero">${guil(400,230)}<div class="top"><span class="lbl">${L('الرصيد الحالي','Solde actuel','Current balance')}</span></div><div class="n">${Math.round(bal()).toLocaleString('en-US')}<span class="cu">${cn(cur)}</span></div><span class="pill">${L('مصروف اليوم','Dépensé aujourd’hui','Spent today')}: ${fmt(today)}</span>${spark()}</div>
+  <div class="card"><h3>${L('سجّل عملية','Enregistrer une opération','Record a transaction')}</h3><div class="row"><input id="inp" placeholder="${L('دفعت 100,000 للمصلح فلان، أو: أعطني تقرير 2025 9 أوت','J’ai payé 100 000 au plombier, ou : rapport 2025 9 août','I paid 100,000 to the plumber, or: report 2025 August 9')}" onkeydown="if(event.key==='Enter')add()"><button class="mic ${rec?'rec':''}" onclick="mic()">${ic('mic')}</button></div>
+  <div class="row" style="margin-top:8px"><button class="btn" onclick="add()">${L('إضافة','Ajouter','Add')}</button><span class="muted">${L('اكتب بحرية أو اضغط الميكروفون','Écrivez librement ou touchez le micro','Type freely or tap the mic')}</span></div></div>`;
+  if(pending)h+=`<div class="card prev"><h3>${L('فهمت منك:','J’ai compris :','I understood:')}</h3><p>${L('المبلغ','Montant','Amount')}: <b>${fmt(pending.amt)}</b></p><p>${L('الجهة','Bénéficiaire','Recipient')}: <b>${P(pending.party)}</b></p><p>${L('النوع','Type','Type')}: <b>${{out:L('مصروف','Dépense','Expense'),in:L('دخل','Revenu','Income'),debt:L('دين (أقرضته)','Prêt accordé','Loan given')}[pending.t]}</b> · ${L('التصنيف','Catégorie','Category')}: <b>${C(pending.cat)}</b></p>${plan==='adv'?`<p><button class="chip" style="margin:0" onclick="alert('${L('في النسخة الحقيقية: التقاط صورة الفاتورة وربطها بالعملية','Dans la vraie version : photo de la facture liée à l’opération','In the real version: capture the invoice photo and link it to the transaction')}')">📎 ${L('إرفاق فاتورة','Joindre une facture','Attach invoice')}</button></p>`:''}<div class="row"><button class="btn" onclick="ok()">${L('تأكيد','Confirmer','Confirm')}</button><button class="btn2" onclick="pending=null;render()">${L('إلغاء','Annuler','Cancel')}</button></div></div>`;
+  h+=`<div class="card"><h3>${L('آخر العمليات','Dernières opérations','Latest transactions')}</h3>${data.slice().sort((a,b)=>a.d-b.d).slice(0,4).map(item).join('')}</div>
+  <div class="note">${L('نسخة تجريبية: الفهم والإجابات هنا مبسطة، وفي النسخة الحقيقية يقوم بها الذكاء الاصطناعي.','Version de démonstration : la compréhension et les réponses sont simplifiées ; dans la vraie version, c’est l’IA qui s’en charge.','Demo version: understanding and answers are simplified here; in the real version the AI handles them.')}</div>`}
+ if(tab==='log')h=`<div class="card"><h3>${L('كل العمليات','Toutes les opérations','All transactions')}</h3>${data.slice().sort((a,b)=>a.d-b.d).slice(0,100).map(item).join('')}</div><div class="note">${L('آخر 100 عملية','100 dernières opérations','Latest 100 transactions')}</div>`;
+ if(tab==='ai'){
+  const Y1=TODAY.getFullYear()-1,CH=L(['كم صرفت هذا الأسبوع؟','أين ذهبت أموالي؟','كيف أقسم راتبي 1,000,000؟','متى ينتهي مالي؟','من أقرضت؟','مصروف سنة '+Y1],['Combien ai-je dépensé cette semaine ?','Où va mon argent ?','Comment répartir mon salaire de 1 000 000 ?','Combien de temps durera mon argent ?','À qui ai-je prêté ?','Dépenses '+Y1],['How much did I spend this week?','Where did my money go?','How should I split my 1,000,000 salary?','How long will my money last?','Who did I lend to?','Spending '+Y1]);
+  h=`<div>${chat.map(m=>`<div class="msg ${m.r==='me'?'me':'ai'}">${m.x}</div>`).join('')}</div><div style="margin:10px 0">${CH.map(q=>`<button class="chip" data-q="${q}" onclick="ask(this.dataset.q)">${q}</button>`).join('')}</div>
+  <div class="row"><input id="q" placeholder="${L('اسأل عن أموالك...','Posez une question sur votre argent...','Ask about your money...')}" onkeydown="if(event.key==='Enter')ask($('#q').value)"><button class="btn" onclick="ask($('#q').value)">${L('إرسال','Envoyer','Send')}</button></div>`}
+ if(tab==='rep'){
+  const sc=data.filter(x=>x.t==='out'&&inSc(x)),t=sc.reduce((a,x)=>a+x.amt,0),c=scCats(sc),col=i=>`hsl(${(i*57+170)%360} 55% 45%)`;
+  let acc=0;const grad=c.map((x,i)=>{const s0=acc/t*100;acc+=x[1];return `${col(i)} ${s0}% ${acc/t*100}%`}).join(',');
+  let vals,labs,D=dim();
+  if(sel.y.length>1){const ks=[...sel.y].sort();vals=ks.map(k=>sc.filter(x=>+x.date.slice(0,4)===k).reduce((a,x)=>a+x.amt,0));labs=ks}
+  else if(sel.m===null){vals=[...Array(12).keys()].map(k=>sc.filter(x=>+x.date.slice(5,7)-1===k).reduce((a,x)=>a+x.amt,0));labs=vals.map((_,i)=>i+1)}
+  else if(sel.w===null){const ks=[0,1,2,3,4].filter(w=>w*7+1<=D);vals=ks.map(k=>sc.filter(x=>Math.floor((+x.date.slice(8,10)-1)/7)===k).reduce((a,x)=>a+x.amt,0));labs=ks.map(k=>'W'+(k+1))}
+  else if(sel.d===null){const a0=sel.w*7+1,b0=Math.min(a0+6,D),ks=[];for(let k=a0;k<=b0;k++)ks.push(k);vals=ks.map(k=>sc.filter(x=>+x.date.slice(8,10)===k).reduce((a,x)=>a+x.amt,0));labs=ks}
+  else{vals=sc.map(x=>x.amt);labs=sc.map((_,i)=>i+1)}
+  const mx=Math.max(...vals,1),avg=sum(x=>x.t==='out'&&x.d<30)/30;
+  h=seg()+fUI()+`<div class="card"><h3>${L('المصروف: ','Dépenses : ','Expenses: ')}${scLabel()}</h3><div style="font-size:1.4rem;font-weight:700">${fmt(t)}</div>${t?`<div class="row" style="align-items:center;gap:14px;margin-top:10px"><div style="width:120px;height:120px;border-radius:50%;flex:none;background:conic-gradient(${grad})"></div><div style="flex:1">${c.map((x,i)=>`<div class="row" style="font-size:.85rem;justify-content:space-between"><span><i style="display:inline-block;width:10px;height:10px;border-radius:3px;background:${col(i)};margin-inline-end:6px"></i>${C(x[0])}</span><span class="muted">${Math.round(x[1]/t*100)}%</span></div>`).join('')}</div></div>`:`<p class="muted">${L('لا توجد مصروفات في هذه الفترة.','Aucune dépense sur cette période.','No expenses in this period.')}</p>`}</div>
+  <div class="card"><h3>${L('الرسم الشريطي','Histogramme','Bar chart')}</h3><div class="row" style="align-items:flex-end;height:130px;gap:4px">${vals.map((v,i)=>`<div style="flex:1;text-align:center;min-width:0"><div style="height:${Math.max(v/mx*100,2)}px;background:var(--accent);border-radius:5px 5px 0 0"></div><div class="muted" style="font-size:.65rem">${labs[i]}</div></div>`).join('')}</div></div>
+  <div class="card"><h3>${L('التفاصيل','Détails','Details')}</h3>${sc.slice().sort((a,b)=>b.date.localeCompare(a.date)).slice(0,30).map(item).join('')||`<p class="muted">${L('لا شيء.','Aucun.','None.')}</p>`}${sc.length>30?`<div class="note">${L('أحدث 30 عملية من ','30 dernières sur ','Latest 30 of ')}${sc.length}</div>`:''}</div>
+  <div class="card"><h3>${L('النتائج المتوقعة','Résultats prévus','Expected results')}</h3><p>${L('معدل صرفك اليومي (آخر 30 يوماً): ','Dépense quotidienne moyenne (30 derniers jours) : ','Average daily spending (last 30 days): ')}<b>${fmt(avg)}</b></p><p>${L('المتوقع لنهاية الشهر: ','Prévision pour la fin du mois : ','Expected by month end: ')}<b>${fmt(avg*30)}</b></p><p>${L('يكفيك رصيدك نحو ','Votre solde suffit pour environ ','Your balance lasts about ')}<b>${Math.floor(bal()/avg)}</b> ${L('يوماً بهذا المعدل.','jours à ce rythme.','days at this rate.')}</p></div>`}
+ if(tab==='rpt'){
+  const Ls=data.filter(inSc),sm=t=>Ls.filter(x=>x.t===t).reduce((a,x)=>a+x.amt,0),inc=sm('in'),ex=sm('out'),db=sm('debt'),c=scCats(Ls.filter(x=>x.t==='out')),pm={};
+  Ls.filter(x=>x.t==='out').forEach(x=>pm[x.party]=(pm[x.party]||0)+x.amt);const tp=Object.entries(pm).sort((a,b)=>b[1]-a[1]).slice(0,5),none=`<p class="muted">${L('لا شيء.','Aucun.','None.')}</p>`;
+  h=seg()+fUI()+`<div class="card"><h3>${L('تقرير الحسابات: ','Rapport des comptes : ','Accounts report: ')}${scLabel()}</h3><div class="item"><span>${L('الدخل','Revenu','Income')}</span><span class="in">${fmt(inc)}</span></div><div class="item"><span>${L('المصروف','Dépenses','Expenses')}</span><span class="out">${fmt(ex)}</span></div><div class="item"><span>${L('ديون أقرضتها','Prêts accordés','Loans given')}</span><span class="out">${fmt(db)}</span></div><div class="item"><b>${L('الصافي','Net','Net')}</b><b class="${inc-ex-db>=0?'in':'out'}">${fmt(inc-ex-db)}</b></div><div class="muted">${L('عدد العمليات: ','Nombre d’opérations : ','Transactions: ')}${Ls.length}</div></div>
+  <div class="card"><h3>${L('المصروف حسب التصنيف','Dépenses par catégorie','Expenses by category')}</h3>${c.map(x=>`<div class="item"><span>${C(x[0])}</span><span>${fmt(x[1])} <span class="muted">(${Math.round(x[1]/ex*100)}%)</span></span></div>`).join('')||none}</div>
+  <div class="card"><h3>${L('أكثر الجهات استلاماً للمال','Principaux bénéficiaires','Top recipients')}</h3>${tp.map(x=>`<div class="item"><span>${P(x[0])}</span><span>${fmt(x[1])}</span></div>`).join('')||none}</div>`}
+
+ if(tab==='team'){const lim=(plan==='adv'?20:5)+extra,R=RL();
+  h=`<div class="card"><h3>${L('أعضاء الفريق','Membres de l’équipe','Team members')} (${team.length} / ${lim})</h3>${team.map(m=>`<div class="item"><div><div>${mName(m)}</div><div class="muted">${R[m.r]}</div></div><span class="chip act" style="margin:0">${m.r==='owner'?'👑':m.r==='entry'?'✍️':m.r==='approve'?'✅':'👁️'}</span></div>`).join('')}</div>
+  <div class="card"><h3>${L('دعوة موظف','Inviter un membre','Invite a member')}</h3><div class="row"><input id="mname" placeholder="${L('الاسم','Nom','Name')}"><select id="mrole" style="border:1px solid var(--line);background:var(--bg);color:var(--text);border-radius:12px;padding:12px;font:inherit"><option value="entry">${R.entry}</option><option value="approve">${R.approve}</option><option value="view">${R.view}</option></select></div><div style="margin-top:8px"><button class="btn" onclick="addMember()">${L('إضافة','Ajouter','Add')}</button></div></div>`;
+  h=seatCardHTML()+h;
+  if(plan==='adv'){const E=data.slice().sort((a,b)=>b.date.localeCompare(a.date)).slice(0,8);
+   h+=`<div class="card"><h3>${L('سجل التدقيق','Journal d’audit','Audit log')}</h3>${E.map((x,i)=>{const u=mName(team[1+i%(team.length-1)]);return `<div class="item"><div style="font-size:.85rem">${i%4===3?L(`${u} عدّل المبلغ من ${fmt(x.amt*.9)} إلى ${fmt(x.amt)}`,`${u} a modifié le montant de ${fmt(x.amt*.9)} à ${fmt(x.amt)}`,`${u} changed the amount from ${fmt(x.amt*.9)} to ${fmt(x.amt)}`):L(`${u} أضاف عملية: ${P(x.party)} ${fmt(x.amt)}`,`${u} a ajouté : ${P(x.party)} ${fmt(x.amt)}`,`${u} added: ${P(x.party)} ${fmt(x.amt)}`)}</div><span class="muted" style="font-size:.75rem;white-space:nowrap">${x.date}</span></div>`}).join('')}<div class="note">${L('السجل لا يمكن حذفه أو تعديله.','Le journal ne peut être ni supprimé ni modifié.','The log cannot be deleted or edited.')}</div></div>`}
+  else h+=`<div class="note">🔒 ${L('سجل التدقيق والمراقبة في باقة الأعمال المتقدم.','Journal d’audit et surveillance dans Entreprise avancé.','Audit log and monitoring are in Advanced business.')} <button class="chip" style="margin:0" onclick="showUpgrade()">${L('ترقية الباقة','Améliorer l’offre','Upgrade plan')}</button></div>`}
+ if(tab==='watch'){
+  const Ls=data.filter(x=>x.t==='out'&&inSc(x)),al=[];
+  Ls.forEach(x=>{const o=opInfo(x);if(o&&o.k>=3&&o.pct>=100)al.push({hi:true,t:L(`مبلغ غير معتاد: ${fmt(x.amt)} إلى «${P(x.party)}» بتاريخ ${x.date}، أعلى من المتوسط (${fmt(o.avg)}) بنسبة ${o.pct}%.`,`Montant inhabituel : ${fmt(x.amt)} à « ${P(x.party)} » le ${x.date}, ${o.pct} % au-dessus de la moyenne (${fmt(o.avg)}).`,`Unusual amount: ${fmt(x.amt)} to "${P(x.party)}" on ${x.date}, ${o.pct}% above the average (${fmt(o.avg)}).`)})});
+  Ls.forEach((x,i)=>{for(let j=0;j<i;j++){const y=Ls[j];if(y.party===x.party&&y.amt===x.amt&&Math.abs(new Date(x.date)-new Date(y.date))/864e5<=7)al.push({hi:false,t:L(`دفعة مكررة محتملة: ${fmt(x.amt)} إلى «${P(x.party)}» بتاريخ ${y.date} ثم ${x.date}.`,`Paiement en double possible : ${fmt(x.amt)} à « ${P(x.party)} » le ${y.date} puis le ${x.date}.`,`Possible duplicate payment: ${fmt(x.amt)} to "${P(x.party)}" on ${y.date} and ${x.date}.`)})}});
+  al.sort((a,b)=>b.hi-a.hi);
+  h=seg()+fUI()+`<div class="card"><h3>${L('تنبيهات المراقبة: ','Alertes : ','Monitoring alerts: ')}${scLabel()}</h3><p class="muted" style="margin:0">${L(`${al.length} تنبيه من ${Ls.length} عملية فُحصت.`,`${al.length} alerte(s) sur ${Ls.length} opérations analysées.`,`${al.length} alert(s) from ${Ls.length} transactions checked.`)}</p></div>`+al.slice(0,12).map(a=>`<div class="card" style="border-color:${a.hi?'var(--red)':'#d4a017'}"><span class="chip act" style="margin:0 0 6px;background:${a.hi?'var(--red)':'#d4a017'};border:0">${a.hi?L('عالٍ','Élevé','High'):L('متوسط','Moyen','Medium')}</span><div style="font-size:.9rem">${a.t}</div></div>`).join('')+(al.length?'':`<div class="card"><p class="muted">${L('لا شيء ملفت في هذه الفترة.','Rien à signaler sur cette période.','Nothing flagged in this period.')}</p></div>`)+`<div class="note">${L('هذه تنبيهات للمراجعة وليست اتهاماً، فكثير من الشواذ له سبب عادي. جرّب السنة الحالية.','Ce sont des alertes à vérifier, pas des accusations : beaucoup d’écarts ont une cause normale. Essayez l’année en cours.','These are alerts to review, not accusations: many anomalies have a normal cause. Try the current year.')}</div>`}
+ if(tab==='set')h=`<div class="card"><h3>${L('الباقة الحالية','Offre actuelle','Current plan')}</h3><div class="item"><span>${PL[plan].n()}</span><span class="muted">${PL[plan].p} / ${L('شهر','mois','mo')}</span></div>${plan!=='adv'?`<button class="btn" style="width:100%;margin-top:10px" onclick="showUpgrade()">${L('ترقية الباقة','Améliorer l’offre','Upgrade plan')}</button>`:''}<div class="note" style="text-align:start">${L('للتخفيض أو الإلغاء: من اشتراكاتك في Google Play أو App Store.','Pour baisser ou annuler : depuis vos abonnements Google Play ou App Store.','To downgrade or cancel: use your Google Play or App Store subscriptions.')}</div><div style="margin-top:10px"><button class="btn2" onclick="resetDemo()">↺ ${L('إعادة التجربة من البداية (للمعاينة فقط)','Recommencer la démo (aperçu uniquement)','Restart the demo (preview only)')}</button></div></div><div class="card"><h3>${L('اللغة','Langue','Language')} · ${langAuto(lang)}</h3><p class="muted" style="margin:0 0 8px">${L(`${ALLLANG.length} لغة. الواجهة مترجمة كاملاً للعربية والفرنسية والإنجليزية، وباقي اللغات تظهر بالإنجليزية مؤقتاً (EN)، وفي التطبيق الحقيقي تُترجم كلها. والذكاء الاصطناعي يفهم أي لغة.`,`${ALLLANG.length} langues. L’interface est traduite en arabe, français et anglais ; les autres s’affichent en anglais pour l’instant (EN) et seront traduites dans la vraie version. L’IA comprend toutes les langues.`,`${ALLLANG.length} languages. The interface is fully translated in Arabic, French and English; the others show in English for now (EN) and will be translated in the real app. The AI understands any language.`)}</p><input placeholder="${L('ابحث عن لغة…','Rechercher une langue…','Search language…')}" oninput="filterLang(this.value)"><div id="langlist" style="margin-top:8px;max-height:240px;overflow-y:auto">${langListHTML('')}</div></div>
+ <div class="card"><h3>${L('العملة الرئيسية','Devise principale','Main currency')} · ${cur}</h3><p class="muted" style="margin:0 0 8px">${CURS.length} ${L('عملة. تظهر بجانب كل المبالغ في التطبيق.','devises. Affichée à côté de tous les montants.','currencies. Shown next to every amount in the app.')}</p><input placeholder="${L('ابحث عن عملة…','Rechercher une devise…','Search currency…')}" oninput="filterCur(this.value)"><div id="curlist" style="margin-top:8px;max-height:240px;overflow-y:auto">${curListHTML('')}</div></div><div class="note">${L('في النسخة الحقيقية: إمكانية تسجيل عمليات بعملات مختلفة مع تحويل تلقائي.','Dans la vraie version : opérations en plusieurs devises avec conversion automatique.','In the real version: transactions in different currencies with automatic conversion.')}</div>`;
+ if(tab!=='home')h=`<div class="hdr"><h2>${tab==='set'?L('الإعدادات','Réglages','Settings'):T[tab][1].replace(/<[^>]+>/g,'')}</h2></div>`+h;
+ el.innerHTML=h;
+ if(tab==='ai')el.scrollTop=el.scrollHeight}
+function add(){const v=$('#inp').value.trim();if(!v)return;if(/تقرير|report|rapport/i.test(v)){cmdReport(v);return}const p=parse(v);if(!p){alert(L('لم أجد مبلغاً في الجملة، اكتب رقماً مثل 50,000','Aucun montant trouvé, écrivez un nombre comme 50 000','No amount found, write a number like 50,000'));return}pending=p;render()}
+function ok(){data.push(pending);pending=null;save();render()}
+function mic(){if(rec)return;rec=true;render();const s=L(['أعطني تقرير 2025 9 أوت','دفعت 45 ألف لمطعم الأصالة','صرفت 20,000 على بنزين','استلمت 300 ألف من أخي','أقرضت سامر 100,000'],['Donne-moi le rapport 2025 9 août','J’ai payé 45 mille au restaurant','Reçu 300 mille de mon frère','J’ai prêté 100 000 à Samir'],['Give me the report 2025 August 9','I paid 45k to the plumber','Received 300k from my brother','I lent 100,000 to Sam']);
+ setTimeout(()=>{rec=false;const v=s[Math.floor(Math.random()*s.length)];if(/تقرير|report|rapport/i.test(v)){cmdReport(v)}else{pending=parse(v);render()}},1400)}
+function ask(q){q=(q||'').trim();if(!q)return;if(/تقرير|report|rapport/i.test(q)){cmdReport(q);return}chat.push({r:'me',x:q});chat.push({r:'ai',x:'...'});render();
+ setTimeout(()=>{chat[chat.length-1].x=answer(q);render()},700)}
+document.documentElement.lang=lang;document.documentElement.dir=lang==='ar'?'rtl':'ltr';
+render();
+</script>
+<script>try{if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js')}catch(e){}</script>
+</body>
+</html>
